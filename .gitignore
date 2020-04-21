@@ -1,0 +1,10 @@
+# Gryphon gitignore @_@
+
+# Personal project configuration
+
+config.yaml
+.idea
+
+# Dependencies and build
+cmake-build-debug
+deps
