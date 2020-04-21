@@ -1,8 +1,7 @@
 ![https://github.com/zlToxicNetherlz/gryphon](https://img.shields.io/badge/Status-Under%20Development-lightgreen?style=for-the-badge)
 
-<p align="center">
-  <img src="https://cdn.itoxic.me/gryphon.png">
-</p>
+<img src="https://cdn.itoxic.me/gryphon.png">
+<p></p>
 
 | Version | License | Development |
 |:--------|:------|:------------|
