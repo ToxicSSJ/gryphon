@@ -18,6 +18,11 @@
 #define _WEBSOCKETPP_CPP11_THREAD_
 
 #include "splash.hpp"
+#include <cstdio>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <array>
 
 #include "yaml-cpp/yaml.h"
 #include "sleepy_discord/websocketpp_websocket.h"
@@ -27,6 +32,10 @@
 
 using namespace std;
 YAML::Node config;
+
+#include <functional>
+#include <iostream>
+#include <string>
 
 class GryphonBot : public SleepyDiscord::DiscordClient {
 public:
@@ -78,6 +87,25 @@ public:
         // test command
         if (message.startsWith("~test")) {
             sendMessage(message.channelID, "Pong!");
+        }
+
+        // pyrun command
+        if (message.startsWith("~cmdtest")) {
+            string original = message.content;
+            string torun = original.substr(4, original.size());
+            // run a process and create a streambuf that reads its stdout and stderr
+            std::array<char, 128> buffer;
+            std::string result;
+            std::unique_ptr<FILE, decltype(&pclose)> pipe(popen("ping 127.0.0.1", "r"), pclose);
+            if (!pipe) {
+                throw std::runtime_error("popen() failed!");
+            }
+            while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+                result += buffer.data();
+            }
+            cout << result << endl;
+            // output what was written to buffer object
+            sendMessage(message.channelID, result);
         }
 
         // shutdown command (kill gryphon)
